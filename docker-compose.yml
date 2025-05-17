@@ -1,0 +1,27 @@
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: contenedor-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: hpotter123
+      MYSQL_DATABASE: practica_ifts
+    ports:
+      - "3307:3306"
+    networks:
+      - mi-red
+
+  web:
+    build: .
+    container_name: contenedor-node
+    restart: always
+    ports:
+      - "8081:3000"
+    depends_on:
+      - mysql
+    networks:
+      - mi-red
+
+networks:
+  mi-red:
+    driver: bridge
